@@ -37,7 +37,7 @@ public:
 void* operator new (size_t size, const char* filename, int line);
 void* operator new[] (size_t size, const char* filename, int line);
 
-void  operator delete(void* p);
-void  operator delete[](void* p);
+void  operator delete(void* p)throw();
+void  operator delete[](void* p)throw();
 
 #endif

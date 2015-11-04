@@ -10,7 +10,7 @@ void* operator new(size_t size, const char* filename, int line)
 	return p;
 }
 
-void operator delete(void* p)
+void operator delete(void* p)throw()
 {
 	MemManager.m_MemList.Delete(Node(reinterpret_cast<long>(p)));
 	free(p);
@@ -23,7 +23,7 @@ void* operator new[](size_t size, const char* filename, int line)
 	return p;
 }
 
-void operator delete[](void* p)
+void operator delete[](void* p)throw()
 {
 	MemManager.m_MemList.Delete(Node(reinterpret_cast<long>(p)));
 	free(p);
