@@ -1,0 +1,38 @@
+
+#include "TemplateNew.h"
+#include "TemplateType.h"
+//#include"MemTrace.h"
+
+#include<vector>
+#include<stdio.h>
+
+#define New(x) New(x,__FILE__,__LINE__)
+
+class Test
+{
+public:
+	Test(int a = 0):m_value(a)
+	{
+		cout<<" Destroy Test " <<endl;
+	}
+	~Test()
+	{
+		cout<<" Destroy Test " <<endl;
+	}
+public:
+	int m_value;
+};
+
+struct TestStruct
+{
+	int a;
+	Array<int, 10> b;
+	Array<char,10> str;
+};
+
+
+int main()
+{
+
+	return 0;
+}
