@@ -23,6 +23,22 @@ public:
 		return *(m_pData + index);
 	}
 	
+	
+	void operator=(T value)
+	{
+		
+	}
+	
+	T* GetPtr()
+	{
+		return m_pData;
+	}
+	
+	Array<T,size>* getptr()
+	{
+		return this;
+	}
+	
 public:
 	void MemSet()
 	{

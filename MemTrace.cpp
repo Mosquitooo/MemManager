@@ -1,42 +1,43 @@
 
 #include"MemTrace.h"
+#include<pthread.h>
 
-MemTrace MemManager;
+#ifdef MEMORY_LEAK_CHECK
+
+List MemManager;
 
 void* operator new(size_t size, const char* filename, int line)
 {
+	if(size == 0)
+		size = 1;
 	void *p = malloc(size);
-	MemManager.m_MemList.Insert(Node(reinterpret_cast<long>(p), filename, line));
+	MemManager.Insert(Node(reinterpret_cast<long>(p), filename, line, size));
 	return p;
 }
 
 void operator delete(void* p)throw()
 {
-	MemManager.m_MemList.Delete(Node(reinterpret_cast<long>(p)));
+	if(p == NULL) return;
+	MemManager.Delete(Node(reinterpret_cast<long>(p)));
 	free(p);
 }
 
 void* operator new[](size_t size, const char* filename, int line)
 {
+	if(size == 0) 
+		size = 1;
 	void *p = malloc(size);
-	MemManager.m_MemList.Insert(Node(reinterpret_cast<long>(p), filename, line));
+	MemManager.Insert(Node(reinterpret_cast<long>(p), filename, line, size));
 	return p;
 }
 
 void operator delete[](void* p)throw()
 {
-	MemManager.m_MemList.Delete(Node(reinterpret_cast<long>(p)));
+	if(p == NULL) return;
+	MemManager.Delete(Node(reinterpret_cast<long>(p)));
 	free(p);
 }
 
-MemTrace::MemTrace()
-{
-
-}
-
-MemTrace::~MemTrace()
-{
-	m_MemList.PrintList();
-}
+#endif
 
 

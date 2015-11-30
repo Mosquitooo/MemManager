@@ -1,14 +1,21 @@
 
+target_dir = ./bin
+
+all:
+	@if [ ! -d ${target_dir} ]; then mkdir ${target_dir};fi
 
 Test:MemTrace.o MemList.o MemTest.cpp
-	g++ $^ -o Test
+	@g++ $^ -o $@
+	@rm -rf ${target_dir}/*.*
+	@mv *.o ${target_dir}
+	@mv $@ ${target_dir}
+	@mv *.gch ${target_dir}
 
 MemTrace.o: MemTrace.cpp MemTrace.h
-	g++ -c $^
+	@g++ -c $^
 
 MemList.o: MemList.cpp MemList.h
-	g++ -c $^
+	@g++ -c $^
 
 clean:
-	rm -f *.o
-	rm -f Test
+	rm -f ./bin/*.*

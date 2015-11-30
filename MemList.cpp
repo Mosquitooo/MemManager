@@ -3,7 +3,7 @@
 
 List::List()
 {
-	CODE_TRACE;
+	CODE_TRACE();
 	m_head = (Node*)malloc(sizeof(Node));
 	m_head->_pAddr = 0;
 	m_head->_filename = NULL;
@@ -13,17 +13,19 @@ List::List()
 
 List::~List()
 {
-	CODE_TRACE;
+	CODE_TRACE();
+	PrintList();
 	clear();
 	free(m_head);
 }
 
 void List::Insert(const Node& node)
 {
-	CODE_TRACE;
+	CODE_TRACE();
 	Node* p = (Node*)malloc(sizeof(Node));
 	p->_pAddr = node._pAddr;
 	p->_filename = node._filename;
+	p->_size = node._size;
 	p->_line = node._line;
 
 	p->pNext = m_head->pNext;
@@ -32,7 +34,7 @@ void List::Insert(const Node& node)
 
 void List::Delete(const Node& node)
 {
-	CODE_TRACE;
+	CODE_TRACE();
 	Node *p = m_head;
 	Node *q = p->pNext;
 	while(q != NULL)
@@ -49,7 +51,7 @@ void List::Delete(const Node& node)
 
 void List::clear(void)
 {
-	CODE_TRACE;
+	CODE_TRACE();
 	while(m_head->pNext != NULL)
 	{
 		Node *p = m_head->pNext;
@@ -60,11 +62,11 @@ void List::clear(void)
 
 void List::PrintList()
 {
-	CODE_TRACE;
+	CODE_TRACE();
 	Node *p = m_head->pNext;
 	while(p != NULL)
 	{
-		cout << p->_filename <<" " <<p->_line <<endl;
+		cout << p->_filename <<" " <<p->_line <<": leak size: "<<p->_size<<endl;
 		p = p->pNext;
 	}
 }
